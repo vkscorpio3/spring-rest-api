@@ -58,5 +58,11 @@ public class ProfileController {
 		 }
 		return false;
 	}
+	
+	@RequestMapping(method=RequestMethod.DELETE,value="{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public void deleteProfile(@PathVariable Long id) {
+		profileRepository.deleteById(id);
+	}
 
 }
