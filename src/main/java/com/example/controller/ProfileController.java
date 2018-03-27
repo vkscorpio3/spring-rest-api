@@ -63,6 +63,6 @@ public class ProfileController {
 	@ResponseStatus(HttpStatus.OK)
 	public void deleteProfile(@PathVariable Long id) {
 		profileRepository.deleteById(id);
-	}
+	} 
 
 }
