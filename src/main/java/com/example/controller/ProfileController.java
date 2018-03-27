@@ -49,5 +49,14 @@ public class ProfileController {
 		return profileRepository.findById(id);
 	}
 
+	@RequestMapping(method=RequestMethod.PATCH,value="/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public boolean updateProfile(@PathVariable Long id,@RequestBody Profile profile){
+		 if(profileRepository.existsById(id)){
+			 profileRepository.save(profile);
+			 return true;// not checking is save pass or fails
+		 }
+		return false;
+	}
 
 }
