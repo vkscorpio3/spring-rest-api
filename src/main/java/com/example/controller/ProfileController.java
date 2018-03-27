@@ -1,10 +1,14 @@
 package com.example.controller;
 
+import static org.springframework.hateoas.mvc.ControllerLinkBuilder.linkTo;
+
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.ExposesResourceFor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -15,9 +19,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.ProfileRepository;
 import com.example.models.Profile;
+import com.example.models.ProfileResource;
 
 @RestController
 @RequestMapping("/api/profile")
+@ExposesResourceFor(Profile.class)
 public class ProfileController {
 	
 	@Autowired
@@ -34,10 +40,14 @@ public class ProfileController {
 	
 	@RequestMapping(method=RequestMethod.GET)
 	@ResponseStatus(HttpStatus.FOUND)
-	public List<Profile> getAllProfile() {
-		List<Profile> profiles = new ArrayList<Profile>();
+	public List<ProfileResource> getAllProfile() {
+		List<ProfileResource> profiles = new ArrayList<ProfileResource>();
 		for(Profile profile:profileRepository.findAll()){
-			profiles.add(profile);
+			ProfileResource profileResource = new ProfileResource(profile);
+			profileResource.add(linkTo(ProfileController.class)
+					       .slash(profile.getId())
+					       .withSelfRel());
+			profiles.add(profileResource);
 			
 		}
 		return profiles;
