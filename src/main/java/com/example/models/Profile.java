@@ -21,6 +21,9 @@ public class Profile {
 	Long id;
 	@Column(name="first_name")
 	String firstName;
+	@Column(name="last_name")
+	String lastName;
+	
 
 	/**
 	 * @return the id
@@ -58,7 +61,6 @@ public class Profile {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	@Column(name="last_name")
-	String lastName;
+
 	
 }
